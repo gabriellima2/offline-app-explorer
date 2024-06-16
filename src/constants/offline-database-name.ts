@@ -1,1 +1,0 @@
-export const OFFLINE_DATABASE_NAME = 'offline.db'
