@@ -6,11 +6,12 @@ export const schema = appSchema({
     tableSchema({
       name: 'posts',
       columns: [
-        { name: 'uid', type: 'number', isIndexed: true },
         { name: 'content', type: 'string' },
         { name: 'image_url', type: 'string' },
         { name: 'is_liked', type: 'boolean' },
-        { name: 'created_at', type: 'string' }
+        { name: 'created_at', type: 'number' },
+        { name: 'updated_at', type: 'number' },
+        { name: 'deleted_at', type: 'number', isOptional: true }
       ]
     })
   ]

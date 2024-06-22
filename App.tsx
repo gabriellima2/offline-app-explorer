@@ -1,3 +1,5 @@
+import 'react-native-get-random-values'
+
 import { Providers } from './src/providers'
 import { Home } from './src/screens/home'
 

@@ -3,9 +3,16 @@ import { date, field, text } from "@nozbe/watermelondb/decorators";
 
 export class Post extends Model {
   static table: string = 'posts'
-  @field('uid') uid: number
+  // @ts-ignore
   @text('content') content: string
-  @text('image_url') image_url: string
-  @field('is_liked') is_liked: boolean
-  @date('created_at') created_at: Date
+  // @ts-ignore
+  @text('image_url') imageUrl: string
+  // @ts-ignore
+  @field('is_liked') isLiked: boolean
+  // @ts-ignore
+  @date('created_at') createdAt!: Date
+  // @ts-ignore
+  @date('updated_at') updatedAt!: Date
+  // @ts-ignore
+  @date('deleted_at') deletedAt!: Date
 }

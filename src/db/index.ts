@@ -10,7 +10,7 @@ const adapter = new SQLite({
   jsi: Platform.OS === 'ios'
 })
 
-export const db = new Database({
+export const database = new Database({
   adapter,
   modelClasses: [Post]
 })

@@ -1,21 +1,16 @@
 import { useQuery, QueryOptions } from '@tanstack/react-query'
 
-import { DATABASE_TABLES } from '@/constants/database-tables'
 import { QUERY_KEYS } from '@/constants/query-keys'
 
-import { supabase } from '@/libs/supabase'
-import type { PostEntity } from '@/entities/post.entity'
+import { database } from '@/db'
+import { Post } from '@/db/models/post.model'
 
-type UseGetAllPostsParams = Omit<QueryOptions<PostEntity[]>, 'queryKey' | 'queryFn'>
+type UseGetAllPostsParams = Omit<QueryOptions<Post[]>, 'queryKey' | 'queryFn'>
 
 export function useGetAllPosts(params?: UseGetAllPostsParams) {
   const { data: posts, ...rest } = useQuery({
     queryKey: [QUERY_KEYS.POSTS.GET_ALL],
-    queryFn: async () => {
-      const response = await supabase.from(DATABASE_TABLES.POSTS).select('*').returns<PostEntity[]>()
-      if (response.error) throw response.error
-      return response.data
-    },
+    queryFn: async () => database.get<Post>('posts').query(),
     ...params,
   })
   return { posts, ...rest }
