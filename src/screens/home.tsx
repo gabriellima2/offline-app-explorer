@@ -13,9 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { useGetAllPosts } from '@/hooks/use-get-all-posts'
 
-import { sync } from '@/db/sync'
 import { database } from '@/db'
-
 import { Post } from '@/db/models/post.model'
 
 
@@ -35,15 +33,6 @@ export function Home() {
         })
         return newPost
       })
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  async function syncLocalPosts() {
-    try {
-      await sync()
-      console.log('Success!')
     } catch (err) {
       console.log(err)
     }
@@ -73,9 +62,6 @@ export function Home() {
         </View>
         <TouchableOpacity onPress={handleCreatePost}>
           <Text>Submit</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={syncLocalPosts}>
-          <Text>Sync</Text>
         </TouchableOpacity>
       </View>
       <FlatList
