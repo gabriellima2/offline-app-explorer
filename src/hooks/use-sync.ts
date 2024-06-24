@@ -1,23 +1,21 @@
-import { useEffect } from "react";
 import { ToastAndroid } from "react-native";
 import NetInfo from '@react-native-community/netinfo'
 
 import { sync } from "@/db/sync";
 
 export function useSync() {
-  useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener((state) => {
-      if (state.isConnected) {
-        try {
-          sync()
-        } catch (err) {
-          ToastAndroid.show(
-            'Remote data will be synchronized when you have an internet connection',
-            ToastAndroid.SHORT
-          )
-        }
+  async function handleSync() {
+    const state = await NetInfo.fetch()
+    if (state.isConnected) {
+      try {
+        await sync()
+      } catch (err) {
+        ToastAndroid.show(
+          (err as Error).message,
+          ToastAndroid.SHORT
+        )
       }
-    })
-    return unsubscribe
-  }, [])
+    }
+  }
+  return { handleSync }
 }
