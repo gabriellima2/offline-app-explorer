@@ -1,24 +1,17 @@
-import { Post } from "@/db/models/post.model";
-import { PostEntity } from "@/entities/post.entity";
+import { CreatePostFields } from "@/schemas/post.schema";
+import { CreatePostDTO } from "@/dtos/post.dto";
 
 export interface PostMapper {
-  getAll(posts: Post[]): PostEntity[]
+  create(fields: CreatePostFields): CreatePostDTO
 }
 
 class PostMapperImpl implements PostMapper {
-  getAll(posts: Post[]): PostEntity[] {
-    const _posts: PostEntity[] = []
-    posts.forEach((post) => {
-      _posts.push({ 
-        id: post.uid.toString(),
-        content: post.content,
-        image_url: post.image_url,
-        is_liked: post.is_liked,
-        created_at: post.created_at.toISOString()
-      })
-    })
-    return _posts
-  } 
+  create(fields: CreatePostFields): CreatePostDTO {
+    return {
+      content: fields.content,
+      imageUrl: fields.imageUrl
+    }
+  }
 }
 
 export const makePostMapper = () => new PostMapperImpl()

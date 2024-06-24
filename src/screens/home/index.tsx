@@ -1,69 +1,22 @@
-import { useState } from 'react'
 import {
   FlatList,
   Image,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View
 } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import { v4 as uuidv4 } from 'uuid';
 
+import { CreatePostForm } from './components/create-post-form';
 import { useGetAllPosts } from '@/hooks/use-get-all-posts'
-
-import { database } from '@/db'
-import { Post } from '@/db/models/post.model'
-
-
-type Values = { content: string; imageUrl: string }
 
 export function Home() {
   const { posts } = useGetAllPosts()
-  const [values, setValues] = useState<Values>({ content: '', imageUrl: '' } as Values)
-
-  async function handleCreatePost() {
-    try {
-      const createdPost = await database.write(async () => {
-        const newPost = await database.get<Post>('posts').create((post) => {
-          post._raw.id = uuidv4()
-          post.content = values.content
-          post.imageUrl = values.imageUrl
-        })
-        return newPost
-      })
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <View style={{ flex: 1 }}>
-        <View>
-          <Text>Content</Text>
-          <TextInput
-            multiline
-            value={values.content}
-            onChangeText={(t) => setValues((prevState) => ({ ...prevState, content: t }))}
-            style={{ borderWidth: 1, borderColor: '#000000' }}
-          />
-        </View>
-        <View>
-          <Text>URL</Text>
-          <TextInput
-            keyboardType='url'
-            value={values.imageUrl}
-            onChangeText={(t) => setValues((prevState) => ({ ...prevState, imageUrl: t }))}
-            style={{ borderWidth: 1, borderColor: '#000000' }}
-          />
-        </View>
-        <TouchableOpacity onPress={handleCreatePost}>
-          <Text>Submit</Text>
-        </TouchableOpacity>
-      </View>
+      <CreatePostForm />
       <FlatList
         data={posts}
         keyExtractor={(item) => item.id}
