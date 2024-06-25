@@ -8,9 +8,9 @@ import { useSync } from '@/hooks/use-sync'
 
 export default function App() {
   const { handleSync } = useSync()
-  useEffect(() => {
+ /* useEffect(() => {
     handleSync()
-  }, [])
+  }, []) */
   return (
     <Providers>
       <Home />

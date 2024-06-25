@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 
-import { CreatePostForm } from './components/create-post-form';
+import { CreatePostForm } from './components/create-post-form'
 import { useGetAllPosts } from '@/hooks/use-get-all-posts'
 
 export function Home() {
