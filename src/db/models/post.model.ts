@@ -6,13 +6,13 @@ export class Post extends Model {
   // @ts-ignore
   @text('content') content: string
   // @ts-ignore
-  @text('image_url') imageUrl: string
+  @text('image_url') image_url: string
   // @ts-ignore
-  @field('is_liked') isLiked: boolean
+  @field('is_liked') is_liked: boolean
   // @ts-ignore
-  @date('created_at') createdAt!: Date
+  @date('created_at') created_at!: Date
   // @ts-ignore
-  @date('updated_at') updatedAt!: Date
+  @date('updated_at') updated_at!: Date
   // @ts-ignore
-  @date('deleted_at') deletedAt!: Date
+  @date('deleted_at') deleted_at!: Date
 }
