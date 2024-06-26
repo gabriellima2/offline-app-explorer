@@ -23,7 +23,9 @@ export function usePost() {
   async function remove(id: string) {
     const post = await getByID(id)
     if (!post) throw new Error(`Post with ID ${id} not found`)
-    await post.markAsDeleted()
+    await database.write(async () => {
+      await post.markAsDeleted()
+    })
   }
 
   async function update(id: string, values: Partial<PostEntity>) {

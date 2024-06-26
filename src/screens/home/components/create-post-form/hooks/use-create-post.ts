@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { ToastAndroid } from "react-native"
 
+import { useHomeContext } from "@/screens/home/contexts/home.context"
 import { usePost } from "@/hooks/use-post"
-import { useSync } from "@/hooks/use-sync"
 
 import { makePostMapper } from "@/mappers/post.mapper"
 
@@ -12,7 +12,7 @@ const mapper = makePostMapper()
 
 export function useCreatePost() {
   const { create } = usePost()
-  const { handleSync } = useSync()
+  const { refetch } = useHomeContext()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   async function handleCreate(fields: CreatePostFields) {
@@ -20,7 +20,7 @@ export function useCreatePost() {
     try {
       const mappedCreatePost = mapper.create(fields)
       await create(mappedCreatePost)
-      await handleSync()
+      await refetch()
     } catch (err) {
       ToastAndroid.show( (err as Error).message, ToastAndroid.SHORT)
     } finally {

@@ -16,6 +16,8 @@ export function useGetAllPosts(params?: UseGetAllPostsParams) {
       await handleSync()
       return await database.get<Post>('posts').query()
     },
+    throwOnError: true,
+    refetchOnWindowFocus: false,
     ...params,
   })
   return { posts, ...rest }

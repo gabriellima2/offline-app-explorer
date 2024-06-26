@@ -1,10 +1,10 @@
 import { ActivityIndicator, FlatList, Text, View } from "react-native";
 
 import { Post } from "./components/post";
-import { useGetAllPosts } from "@/hooks/use-get-all-posts";
+import { useHomeContext } from "../../contexts/home.context";
 
 export function Posts() {
-  const { posts, isLoading } = useGetAllPosts()
+  const { posts, isLoading } = useHomeContext()
   if (isLoading) return <ActivityIndicator />
   return (
     <FlatList

@@ -1,12 +1,12 @@
 import { useState } from "react"
 import { ToastAndroid } from "react-native"
 
+import { useHomeContext } from "@/screens/home/contexts/home.context"
 import { usePost } from "@/hooks/use-post"
-import { useSync } from "@/hooks/use-sync"
 
 export function usePostInteractions() {
   const post = usePost()
-  const { handleSync } = useSync()
+  const { refetch } = useHomeContext()
   const [isDeleting, setIsDeleting] = useState(false)
   const [isLiking, setIsLiking] = useState(false)
 
@@ -14,7 +14,7 @@ export function usePostInteractions() {
     setIsDeleting(true)
     try {
       await post.remove(id)
-      await handleSync()
+      await refetch()
     } catch (err) {
       ToastAndroid.show((err as Error).message, ToastAndroid.SHORT)
     } finally {
@@ -26,7 +26,7 @@ export function usePostInteractions() {
     setIsLiking(true)
     try {
       await post.update(id, { is_liked: isLiked })
-      await handleSync()
+      await refetch()
     } catch (err) {
       ToastAndroid.show((err as Error).message, ToastAndroid.SHORT)
     } finally {
